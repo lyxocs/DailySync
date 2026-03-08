@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  dailysync:
+    build: .
+    image: dailysync:latest
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      # 持久化 SQLite 数据库（保存登录 Session）
+      - ./db:/app/db
+      # 持久化下载的运动文件
+      - ./garmin_fit_files:/app/garmin_fit_files
+      # 持久化日志
+      - ./logs:/app/logs
